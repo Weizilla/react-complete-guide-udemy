@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium, {StyleRoot} from "radium";
 
 const App = () => {
     const [personsState, setPersonsState] = useState({
@@ -28,7 +29,7 @@ const App = () => {
 
         const persons = [...personsState.persons];
         persons[personIndex] = person;
-        
+
         setPersonsState({persons: persons})
     };
 
@@ -46,11 +47,16 @@ const App = () => {
     };
 
     const style = {
-        backgroundColor: "white",
+        backgroundColor: "green",
+        color: "white",
         font: "inherit",
         border: "1px solid blue",
         padding: "8px",
-        cursor: "pointer"
+        cursor: "pointer",
+        ":hover": {
+            backgroundColor: "lightgreen",
+            color: "black",
+        },
     };
 
     let persons = null;
@@ -67,17 +73,33 @@ const App = () => {
                     />
                 })}
             </div>
-        )
+        );
+
+        style.backgroundColor = "red";
+        style[":hover"] = {
+            backgroundColor: "salmon",
+            color: "black",
+        }
+    }
+
+    const classes = [];
+    if (personsState.persons.length <= 2) {
+        classes.push("red");
+    }
+    if (personsState.persons.length <= 1) {
+        classes.push("bold");
     }
 
     return (
-        <div className="App">
-            <h1>hello react</h1>
-            <button onClick={togglePersonsHandler}>Toggle</button>
-            <div>{persons}</div>
-
-        </div>
+        <StyleRoot>
+            <div className="App">
+                <h1>hello react</h1>
+                <p className={classes.join(" ")}>hello</p>
+                <button style={style} onClick={togglePersonsHandler}>Toggle</button>
+                <div>{persons}</div>
+            </div>
+        </StyleRoot>
     );
 };
 
-export default App;
+export default Radium(App);
