@@ -45,7 +45,7 @@ const App = () => {
         })
     };
 
-    const btnClasses = [classes.Button];
+    let btnClasses = "";
     let persons = null;
     if (showPersonsState.showPersons) {
         persons = (
@@ -62,7 +62,7 @@ const App = () => {
             </div>
         );
 
-        btnClasses.push(classes.Red);
+        btnClasses = classes.Red;
     }
 
     const appliedClasses = [];
@@ -77,7 +77,7 @@ return (
         <div className={classes.App}>
             <h1>hello react</h1>
             <p className={appliedClasses.join(" ")}>hello</p>
-            <button className={btnClasses.join(" ")} onClick={togglePersonsHandler}>Toggle</button>
+            <button className={btnClasses} onClick={togglePersonsHandler}>Toggle</button>
             <div>{persons}</div>
         </div>
     );
