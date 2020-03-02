@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import classes from "./App.module.css";
-import Person from './Person/Person';
+import Persons from "./Persons/Persons";
+import Cockpit from "./Cockpit/Cockpit";
 
 const App = () => {
     const [personsState, setPersonsState] = useState({
@@ -45,40 +46,24 @@ const App = () => {
         })
     };
 
-    let btnClasses = "";
     let persons = null;
+
     if (showPersonsState.showPersons) {
-        persons = (
-            <div>
-                {personsState.persons.map((person, index) => {
-                    return <Person
-                        name={person.name}
-                        age={person.age}
-                        click={() => deletePersonHandler(index)}
-                        nameChange={(event) => nameChangedHandler(event, person.id)}
-                        key={person.id}
-                    />
-                })}
-            </div>
-        );
-
-        btnClasses = classes.Red;
+        persons = <Persons
+            persons={personsState.persons}
+            clicked={deletePersonHandler}
+            changed={nameChangedHandler}
+        />
     }
 
-    const appliedClasses = [];
-    if (personsState.persons.length <= 2) {
-        appliedClasses.push(classes.red);
-    }
-    if (personsState.persons.length <= 1) {
-        appliedClasses.push(classes.bold);
-    }
-
-return (
+    return (
         <div className={classes.App}>
-            <h1>hello react</h1>
-            <p className={appliedClasses.join(" ")}>hello</p>
-            <button className={btnClasses} onClick={togglePersonsHandler}>Toggle</button>
-            <div>{persons}</div>
+            <Cockpit
+                showPersons={showPersonsState.showPersons}
+                persons={personsState.persons}
+                clicked={togglePersonsHandler}
+            />
+            {persons}
         </div>
     );
 };
