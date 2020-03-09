@@ -4,15 +4,37 @@ import Persons from "./Persons/Persons";
 import Cockpit from "./Cockpit/Cockpit";
 
 class App extends Component {
-    state = {
-        persons: [
-            {id: "1", name: "max", age: 28},
-            {id: "2", name: "manu", age: 29},
-            {id: "3", name: "bob", age: 26}
-        ],
-        showPersons: true
-    };
+    constructor(props) {
+        super(props);
+        console.log("App.js constructor");
 
+        this.state = {
+            persons: [
+                {id: "1", name: "max", age: 28},
+                {id: "2", name: "manu", age: 29},
+                {id: "3", name: "bob", age: 26}
+            ],
+            showPersons: true
+        };
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log("App.js derived state");
+        return state;
+    }
+
+    componentDidMount() {
+        console.log("App.js component did mount");
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("App.js should component update")
+        return true;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("App.js component did update");
+    }
 
     nameChangedHandler = (event, id) => {
         const personIndex = this.state.persons.findIndex(p => {
