@@ -3,7 +3,7 @@ import React from "react";
 const withClass = (WithComponent, className) => {
     return props => (
         <div className={className}>
-            <WithComponent>
+            <WithComponent {...props}>
                 {props.children}
             </WithComponent>
         </div>

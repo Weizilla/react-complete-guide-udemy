@@ -12,12 +12,13 @@ class App extends Component {
 
         this.state = {
             persons: [
-                {id: "1", name: "max", age: 28},
+                {id: "1", name: "max", age: 33},
                 {id: "2", name: "manu", age: 29},
                 {id: "3", name: "bob", age: 26}
             ],
             showPersons: true,
             showCockpit: true,
+            changeCounter: 0,
         };
     }
 
@@ -53,7 +54,12 @@ class App extends Component {
         const persons = [...this.state.persons];
         persons[personIndex] = person;
 
-        this.setState({persons: persons})
+        this.setState((prevState, props) => {
+            return {
+                persons: persons,
+                changeCounter: prevState.changeCounter + 1,
+            };
+        });
     };
 
     deletePersonHandler = (index) => {
@@ -82,6 +88,7 @@ class App extends Component {
 
         return (
             <Aux>
+                <p>{this.state.changeCounter}</p>
                 <button onClick={() => {this.setState({showCockpit: ! this.state.showCockpit})}}>Show Cockpit</button>
                 {
                     this.state.showCockpit ?
