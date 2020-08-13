@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -15,12 +17,14 @@ class BurgerBuilder extends Component {
     super(props);
     this.state = {
       ingredients: {
-        salad: 1,
-        bacon: 2,
-        cheese: 2,
-        meat: 1,
+        salad: 0,
+        bacon: 0,
+        cheese: 0,
+        meat: 0,
       },
       totalPrice: 4,
+      purchaseable: false,
+      purchasing: false,
     };
   }
 
@@ -43,6 +47,8 @@ class BurgerBuilder extends Component {
         totalPrice: newPrice,
       },
     );
+
+    this.updatePurchaseable(updatedIngredients);
   };
 
   removeIngredientHandler = (type) => {
@@ -65,10 +71,27 @@ class BurgerBuilder extends Component {
       ingredients: updatedIngredients,
       totalPrice: newPrice,
     });
+
+    this.updatePurchaseable(updatedIngredients);
+  };
+
+  updatePurchaseable = (ingredients) => {
+    const purchaseable = Object.values(ingredients).some((v) => v > 0);
+    this.setState({
+      purchaseable,
+    });
+  };
+
+  purchasingHandler = () => {
+    this.setState({
+      purchasing: true,
+    });
   };
 
   render() {
-    const { ingredients, totalPrice } = this.state;
+    const {
+      ingredients, totalPrice, purchaseable, purchasing,
+    } = this.state;
     const disabledInfo = Object.fromEntries(
       Object.entries(ingredients).map(
         ([k, v]) => [k, v === 0],
@@ -77,12 +100,18 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
+        <Modal show={purchasing}>
+          <OrderSummary ingredients={ingredients} />
+        </Modal>
+
         <Burger ingredients={ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabledInfo={disabledInfo}
           price={totalPrice}
+          purchaseable={purchaseable}
+          purchasing={this.purchasingHandler}
         />
       </Aux>
     );

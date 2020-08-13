@@ -23,7 +23,8 @@
         "only-warn"
     ],
     "rules": {
-        "quotes": ["error", "double"]
+        "quotes": ["error", "double"],
+        "react/jsx-one-expression-per-line": ["off"]
     },
     "parser": "babel-eslint"
 }
