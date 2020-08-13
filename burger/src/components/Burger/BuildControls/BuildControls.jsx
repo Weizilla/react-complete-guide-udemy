@@ -48,7 +48,7 @@ BuildControls.propTypes = {
   disabledInfo: PropTypes.shape({}).isRequired,
   price: PropTypes.number.isRequired,
   purchaseable: PropTypes.bool.isRequired,
-  purchasing: PropTypes.bool.isRequired,
+  purchasing: PropTypes.func.isRequired,
 };
 
 export default BuildControls;
