@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Aux from "../../hoc/Aux";
+import Aux from "../../hoc/Aux/Aux";
 import classes from "./Layout.module.css";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
@@ -9,7 +9,7 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSideDrawer: true,
+      showSideDrawer: false,
     };
   }
 
